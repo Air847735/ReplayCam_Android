@@ -33,6 +33,7 @@ import com.tiss.replaycam.store.ClipFolder
 import com.tiss.replaycam.store.ClipStore
 import com.tiss.replaycam.store.SavedClip
 import com.tiss.replaycam.ui.theme.*
+import kotlin.math.roundToInt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -508,4 +509,3 @@ fun makeDateGroups(clips: List<SavedClip>): List<DateGroup> {
         .sortedByDescending { it.date }
 }
 
-private fun Float.roundToInt() = kotlin.math.roundToInt()
