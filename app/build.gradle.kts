@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.tiss.replaycam"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.tiss.replaycam"
