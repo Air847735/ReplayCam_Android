@@ -235,7 +235,7 @@ private fun FolderView(
                                 onTap = { navController.navigate("day/${group.dateKey}") }
                             )
                             if (idx < unassignedGroups.lastIndex) {
-                                Divider(color = Color.White.copy(alpha = 0.08f))
+                                HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                             }
                         }
                     }

@@ -51,12 +51,11 @@ class PoseDetector(context: Context) {
 
                 for (lm in landmarks) {
                     val cocoIdx = mlKitToCoco[lm.landmarkType] ?: continue
-                    val pos3D = lm.inFrameLikelihoodOfPose()
                     val wp = lm.position3D
                     keypoints[cocoIdx] = Keypoint(
                         x = lm.position.x / w,
                         y = lm.position.y / h,
-                        confidence = lm.inFrameLikelihoodOfPose(),
+                        confidence = lm.inFrameLikelihood,
                         worldX = wp.x,
                         worldY = wp.y,
                         worldZ = wp.z

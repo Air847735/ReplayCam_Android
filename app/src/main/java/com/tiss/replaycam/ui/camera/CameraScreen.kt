@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.view.PreviewView
 import androidx.compose.animation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
@@ -145,14 +147,14 @@ fun CameraScreen(
 
         // 延遲畫面：主畫面（N秒前的畫面）
         delayedBitmap?.let { bmp ->
-            androidx.compose.foundation.Image(
+            Image(
                 bitmap = bmp.asImageBitmap(),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
                     .graphicsLayer { if (cameraManager.isMirrored) scaleX = -1f }
                     .clickable { controlsVisible = !controlsVisible },
-                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                contentScale = ContentScale.Crop
             )
         } ?: Box(
             modifier = Modifier
@@ -217,13 +219,13 @@ fun CameraScreen(
                         }
                     }
             ) {
-                androidx.compose.foundation.Image(
+                Image(
                     bitmap = bmp.asImageBitmap(),
                     contentDescription = "即時畫面",
                     modifier = Modifier
                         .fillMaxSize()
                         .graphicsLayer { if (cameraManager.isMirrored) scaleX = -1f },
-                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                    contentScale = ContentScale.Crop
                 )
             }
         }

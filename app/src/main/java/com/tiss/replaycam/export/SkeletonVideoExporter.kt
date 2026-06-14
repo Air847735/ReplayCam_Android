@@ -80,7 +80,7 @@ object SkeletonVideoExporter {
 
                 val pose = runCatching { detector.detect(bmp) }.getOrNull()
 
-                val canvas = surface.lockHardwareCanvas() ?: surface.lockCanvas(null)
+                val canvas = surface.lockCanvas(null) ?: continue
                 canvas.drawBitmap(
                     Bitmap.createScaledBitmap(bmp, width, height, true),
                     0f, 0f, null

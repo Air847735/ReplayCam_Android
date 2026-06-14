@@ -45,7 +45,6 @@ class VideoExporter(private val context: Context) {
         var presentationTimeUs = 0L
         val frameIntervalUs = 1_000_000L / fps
 
-        val canvas = surface.lockCanvas(null)
         frames.forEachIndexed { _, frame ->
             val c = surface.lockCanvas(null) ?: return@forEachIndexed
             try {

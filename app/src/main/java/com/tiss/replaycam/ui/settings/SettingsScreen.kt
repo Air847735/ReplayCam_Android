@@ -90,7 +90,7 @@ fun SettingsScreen(
                         hint = "開啟拍攝時預設的延遲秒數",
                         onValueChange = { onDelayChange(it.toDouble()) }
                     )
-                    Divider(color = Color.White.copy(alpha = 0.08f))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                     SettingsSegmentRow(
                         label = "錄影幀率",
                         hint = "標準幀率，最多可儲存 35 秒",
@@ -99,7 +99,7 @@ fun SettingsScreen(
                         selected = defaultFps,
                         onSelect = { onFpsChange(it) }
                     )
-                    Divider(color = Color.White.copy(alpha = 0.08f))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                     SettingsSegmentRow(
                         label = "預設鏡頭",
                         hint = "開啟拍攝時預設使用的鏡頭",
@@ -112,9 +112,9 @@ fun SettingsScreen(
 
                 SettingsCard {
                     SettingsInfoRow(label = "片段數量", value = "${clips.size} 個")
-                    Divider(color = Color.White.copy(alpha = 0.08f))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                     SettingsInfoRow(label = "佔用空間", value = "%.1f MB".format(totalMB))
-                    Divider(color = Color.White.copy(alpha = 0.08f))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                     Surface(
                         color = Color.Transparent,
                         modifier = Modifier.fillMaxWidth()
@@ -136,7 +136,7 @@ fun SettingsScreen(
 
                 SettingsCard {
                     SettingsInfoRow(label = "版本", value = BuildConfig.VERSION_NAME)
-                    Divider(color = Color.White.copy(alpha = 0.08f))
+                    HorizontalDivider(color = Color.White.copy(alpha = 0.08f))
                     SettingsInfoRow(label = "建置", value = BuildConfig.VERSION_CODE.toString())
                 }
 
