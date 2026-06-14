@@ -50,14 +50,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val scope = rememberCoroutineScope()
 
-                val defaultDelay by dataStore.data
-                    .map { it[KEY_DELAY] ?: 5.0 }
+                val defaultDelay by remember { dataStore.data.map { it[KEY_DELAY] ?: 5.0 } }
                     .collectAsState(initial = 5.0)
-                val defaultFps by dataStore.data
-                    .map { it[KEY_FPS] ?: 30 }
+                val defaultFps by remember { dataStore.data.map { it[KEY_FPS] ?: 30 } }
                     .collectAsState(initial = 30)
-                val defaultLens by dataStore.data
-                    .map { it[KEY_LENS] ?: 0 }
+                val defaultLens by remember { dataStore.data.map { it[KEY_LENS] ?: 0 } }
                     .collectAsState(initial = 0)
 
                 NavHost(navController = navController, startDestination = "home") {
