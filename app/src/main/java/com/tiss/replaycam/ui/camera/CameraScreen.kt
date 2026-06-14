@@ -137,34 +137,29 @@ fun CameraScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+        // PreviewView 縮成 0dp 隱藏，CameraX 仍需要它來綁定 Preview use case
         AndroidView(
             factory = { previewView },
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable {
-                    animateContentSize()
-                    controlsVisible = !controlsVisible
-                }
+            modifier = Modifier.size(0.dp)
         )
 
+        // 延遲畫面：主畫面（N秒前的畫面）
         delayedBitmap?.let { bmp ->
-            val matrix = if (cameraManager.isMirrored)
-                ColorMatrix().apply { }
-            else null
             androidx.compose.foundation.Image(
                 bitmap = bmp.asImageBitmap(),
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = androidx.compose.ui.layout.ContentScale.Crop,
-                colorFilter = if (cameraManager.isMirrored)
-                    ColorFilter.colorMatrix(ColorMatrix(floatArrayOf(
-                        -1f, 0f, 0f, 0f, 255f,
-                        0f, -1f, 0f, 0f, 255f,
-                        0f, 0f, -1f, 0f, 255f,
-                        0f, 0f, 0f, 1f, 0f
-                    ))) else null
+                modifier = Modifier
+                    .fillMaxSize()
+                    .graphicsLayer { if (cameraManager.isMirrored) scaleX = -1f }
+                    .clickable { controlsVisible = !controlsVisible },
+                contentScale = androidx.compose.ui.layout.ContentScale.Crop
             )
-        }
+        } ?: Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+                .clickable { controlsVisible = !controlsVisible }
+        )
 
         AnimatedVisibility(
             visible = controlsVisible,
@@ -225,7 +220,9 @@ fun CameraScreen(
                 androidx.compose.foundation.Image(
                     bitmap = bmp.asImageBitmap(),
                     contentDescription = "即時畫面",
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .graphicsLayer { if (cameraManager.isMirrored) scaleX = -1f },
                     contentScale = androidx.compose.ui.layout.ContentScale.Crop
                 )
             }
