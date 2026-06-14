@@ -1,10 +1,13 @@
 package com.tiss.replaycam
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -28,7 +31,7 @@ import com.tiss.replaycam.ui.theme.ReplayCamTheme
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-private val android.content.Context.dataStore by preferencesDataStore(name = "settings")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 private val KEY_DELAY = doublePreferencesKey("default_delay")
 private val KEY_FPS = intPreferencesKey("default_fps")
