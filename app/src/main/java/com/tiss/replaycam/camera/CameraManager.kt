@@ -258,10 +258,12 @@ private fun ImageProxy.toBitmap(mirror: Boolean): Bitmap? {
         yuvImage.compressToJpeg(Rect(0, 0, width, height), 60, out)
         val bytes = out.toByteArray()
         var bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return null
-        if (mirror) {
-            val matrix = Matrix().apply { preScale(-1f, 1f) }
-            bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, false)
+        val rotation = imageInfo.rotationDegrees
+        val matrix = Matrix().apply {
+            if (rotation != 0) postRotate(rotation.toFloat())
+            if (mirror) postScale(-1f, 1f)
         }
+        bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, false)
         bmp
     } catch (e: Exception) {
         null
