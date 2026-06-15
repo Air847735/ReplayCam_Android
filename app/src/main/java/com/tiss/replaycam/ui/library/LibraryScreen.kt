@@ -48,12 +48,24 @@ fun LibraryScreen(
     navController: NavController,
     clipStore: ClipStore,
     title: String = "日期記錄",
-    onSelectClip: ((SavedClip) -> Unit)? = null
+    onSelectClip: ((SavedClip) -> Unit)? = null,
+    filterDateKey: String? = null,
+    filterFolderId: String? = null
 ) {
     var displayMode by remember { mutableStateOf(LibraryDisplayMode.FOLDER) }
     var showCreateFolder by remember { mutableStateOf(false) }
     var newFolderName by remember { mutableStateOf("") }
-    val clips by clipStore.clips.collectAsState()
+    val allClips by clipStore.clips.collectAsState()
+    val clips = remember(allClips, filterDateKey, filterFolderId) {
+        when {
+            filterDateKey != null -> {
+                val fmt = java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault())
+                allClips.filter { fmt.format(java.util.Date(it.dateMillis)) == filterDateKey }
+            }
+            filterFolderId != null -> allClips.filter { it.folderID == filterFolderId }
+            else -> allClips
+        }
+    }
     val folders by clipStore.folders.collectAsState()
 
     if (showCreateFolder) {

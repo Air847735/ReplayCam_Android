@@ -86,6 +86,30 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
+                        route = "day/{dateKey}",
+                        arguments = listOf(navArgument("dateKey") { type = NavType.StringType })
+                    ) { back ->
+                        val dateKey = back.arguments?.getString("dateKey") ?: return@composable
+                        LibraryScreen(
+                            navController = navController,
+                            clipStore = clipStore,
+                            filterDateKey = dateKey
+                        )
+                    }
+
+                    composable(
+                        route = "folder/{folderId}",
+                        arguments = listOf(navArgument("folderId") { type = NavType.StringType })
+                    ) { back ->
+                        val folderId = back.arguments?.getString("folderId") ?: return@composable
+                        LibraryScreen(
+                            navController = navController,
+                            clipStore = clipStore,
+                            filterFolderId = folderId
+                        )
+                    }
+
+                    composable(
                         route = "player/{clipId}",
                         arguments = listOf(navArgument("clipId") { type = NavType.StringType })
                     ) { back ->
