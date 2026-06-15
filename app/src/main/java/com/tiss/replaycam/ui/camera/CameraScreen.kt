@@ -338,12 +338,10 @@ private fun ControlPanel(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 listOf(30, 60, 120).forEach { fps ->
-                    val enabled = supportedFps.contains(fps)
                     FilterChip(
                         selected = selectedFps == fps,
-                        onClick = { if (enabled) onFpsChange(fps) },
+                        onClick = { onFpsChange(fps) },
                         label = { Text("${fps}fps", fontSize = 11.sp) },
-                        enabled = enabled,
                         modifier = Modifier.weight(1f)
                     )
                 }
