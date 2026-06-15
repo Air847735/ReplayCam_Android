@@ -1,6 +1,7 @@
 package com.tiss.replaycam.ui.settings
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -215,6 +216,7 @@ private fun <T> SettingsSegmentRow(
                         .weight(1f)
                         .clip(RoundedCornerShape(6.dp))
                         .background(if (selected == option) Color.White else Color.Transparent)
+                        .clickable { onSelect(option) }
                         .padding(vertical = 8.dp),
                     contentAlignment = Alignment.Center
                 ) {
