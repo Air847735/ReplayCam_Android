@@ -125,7 +125,7 @@ class CameraManager(application: android.app.Application) : androidx.lifecycle.A
         }
 
         val analysis = ImageAnalysis.Builder()
-            .setTargetResolution(Size(1080, 1920))
+            .setTargetResolution(Size(540, 960))
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_YUV_420_888)
             .build()

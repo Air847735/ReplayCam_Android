@@ -9,12 +9,14 @@ class FrameBuffer(private val maxDurationSeconds: Double = 35.0) {
     private val frames = ArrayDeque<TimestampedFrame>()
 
     companion object {
-        private const val EARLY_CLEANUP_THRESHOLD = 1200
+        private const val EARLY_CLEANUP_THRESHOLD = 600
     }
 
     fun append(frame: TimestampedFrame) = lock.withLock {
         frames.addLast(frame)
-        if (frames.size >= EARLY_CLEANUP_THRESHOLD) {
+        val shouldEvict = frames.size >= EARLY_CLEANUP_THRESHOLD ||
+            (frames.size >= 2 && (frames.last().timestampNanos - frames.first().timestampNanos) > (maxDurationSeconds * 1_000_000_000.0).toLong())
+        if (shouldEvict) {
             evictExpired(frame.timestampNanos)
         }
     }
@@ -42,7 +44,7 @@ class FrameBuffer(private val maxDurationSeconds: Double = 35.0) {
     private fun evictExpired(latestTimestampNanos: Long) {
         val cutoffNanos = latestTimestampNanos - (maxDurationSeconds * 1_000_000_000.0).toLong()
         while (frames.isNotEmpty() && frames.first().timestampNanos < cutoffNanos) {
-            frames.removeFirst().bitmap.recycle()
+            frames.removeFirst() // 不呼叫 recycle()，讓 GC 回收，避免 UI 仍持有參考時 crash
         }
     }
 }
