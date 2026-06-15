@@ -56,6 +56,7 @@ fun CameraScreen(
 
     val realtimeBitmap by cameraManager.realtimeBitmap.collectAsState()
     val delayedBitmap by cameraManager.delayedBitmap.collectAsState()
+    val bufferDuration by cameraManager.bufferDuration.collectAsState()
     val isSaving by cameraManager.isSaving.collectAsState()
     val showSuccess by cameraManager.showSuccess.collectAsState()
     val supportedFps by cameraManager.supportedFps.collectAsState()
@@ -160,8 +161,33 @@ fun CameraScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Black)
-                .clickable { controlsVisible = !controlsVisible }
-        )
+                .clickable { controlsVisible = !controlsVisible },
+            contentAlignment = Alignment.Center
+        ) {
+            val remaining = (selectedDelay - bufferDuration).coerceAtLeast(0.0)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = "${remaining.toInt() + 1}",
+                    fontSize = 80.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = "準備延遲畫面中...",
+                    fontSize = 14.sp,
+                    color = Color.White.copy(alpha = 0.6f)
+                )
+                LinearProgressIndicator(
+                    progress = { (bufferDuration / selectedDelay).coerceIn(0.0, 1.0).toFloat() },
+                    modifier = Modifier.width(160.dp),
+                    color = Color.White,
+                    trackColor = Color.White.copy(alpha = 0.2f)
+                )
+            }
+        }
 
         AnimatedVisibility(
             visible = controlsVisible,
